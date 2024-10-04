@@ -1,0 +1,25 @@
+{
+  "name": "fakeserver",
+  "module": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot --inspect app.js",
+    "build": "bun build app.js --packages external --outfile dist/bundle.main.js --target browser --sourcemap --minify",
+    "start": "bun run --smol dist/bundle.main.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "marked": "^14.1.2",
+    "morgan": "^1.10.0"
+  },
+  "packageManager": "bun@1.1.25",
+  "version": "1.0.0"
+}
