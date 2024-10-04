@@ -11,6 +11,18 @@ Run the following command to install all necessary dependencies:
 bun install
 ```
 
+## To Run the Dev Server:
+Run the following command to start the development server with inspector enabled:
+```sh
+bun dev
+```
+
+## To Build Project for Production:
+Run the following command you will find your build inside dist folder:
+```sh
+bun run build
+```
+
 ## To Run the Server with Low Memory Mode:
 For production mode, execute:
 ```sh
