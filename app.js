@@ -2,18 +2,22 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import { marked } from 'marked'; // Import the marked package
-import path from 'path';
-import fs from 'fs'
+import path from 'node:path';
+import dotenv from 'dotenv'
+import fs from 'node:fs'
 import 'colors';
-import util from 'util';
+import util from 'node:util';
 import deviceRoutes from './src/routes/deviceRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
 import stockRoutes from './src/routes/stockRoutes.js';
+import orderRoutes from './src/routes/orderRoutes.js';
+dotenv.config();
+
 
 const app = express();
 const port = process.env.PORT || 3200;
 const host = process.env.HOST || '0.0.0.0';
-const dump = (obj, depth = null) => util.inspect(obj, { depth, colors: true });
+export const dump = (obj, depth = null) => util.inspect(obj, { depth, colors: true });
 
 app.use(cors());
 app.use(express.json());
@@ -27,7 +31,7 @@ app.get('/', async (req, res) => {
 // help and info route
 
 app.get('/info', (req, res) => {
-    const filePath = path.join(__dirname, 'README.md');
+    const filePath = path.join(__dirname, 'dist', 'README.md');
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error(err);
@@ -40,7 +44,7 @@ app.get('/info', (req, res) => {
 
 app.post('/api/registrations', async (req, res) => {
     const eyeorderRegister = req.body;
-    res.status(200);
+    res.json({ id: `1` }).status(200)
     console.log(`app data = ${dump(eyeorderRegister)}`.blue);
 });
 
@@ -48,6 +52,7 @@ app.post('/api/registrations', async (req, res) => {
 app.use('/api/devices', deviceRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/stock', stockRoutes);
+app.use('/api/orders', orderRoutes)
 
 app.listen(port, host, () => {
     console.log(`server is listening @ *** http://${host === '0.0.0.0' ? 'localhost' : host}:${port} ***`.america.bgMagenta);
